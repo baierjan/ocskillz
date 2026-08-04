@@ -17,11 +17,17 @@ MetaCPAN project documentation, and CPAN Security Group guidance. It is
 MIT-licensed and is not derived from the upstream SOTA Engineering Skills
 repository.
 
+`sota-typescript` is an original local synthesis from TypeScript, Bun, Node.js,
+and Biome documentation and TC39 proposal material. It is MIT-licensed and is
+not derived from the upstream SOTA Engineering Skills repository. It supersedes
+the earlier `typescript-tooling` skill, whose reference material was folded into
+its rule files.
+
 ## Manual Refresh
 
 1. Fetch the upstream repository and check out the desired commit.
 2. Compare only the externally sourced `sota-*` directories against that
-   commit; exclude `sota-perl`.
+   commit; exclude `sota-perl` and `sota-typescript`.
 3. Reapply the local integration policies and canonical ownership boundaries.
 4. Preserve the Python defaults and established-project exception.
 5. Update the imported commit above and in each imported `SKILL.md`.

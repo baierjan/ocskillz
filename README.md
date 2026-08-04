@@ -26,6 +26,7 @@ This repository contains personalized extensions that enhance coding agent capab
 | [sota-haskell](./skills/sota-haskell/SKILL.md) | Haskell code, Cabal, GHC, concurrency, FFI, or audits | Type-driven Haskell engineering with GHCup, Cabal, Fourmolu, HLint, profiling, testing, and packaging. |
 | [sota-perl](./skills/sota-perl/SKILL.md) | Perl code, CPAN tooling, frameworks, or audits | Perl semantics, dependencies, APIs, async/processes, security, performance, testing, and releases. |
 | [sota-rust](./skills/sota-rust/SKILL.md) | Rust code, Cargo, Tokio, unsafe, or audits | Ownership, errors, async, unsafe discipline, security, performance, and CI. |
+| [sota-typescript](./skills/sota-typescript/SKILL.md) | TypeScript or JavaScript code, tooling, or audits | Bun/Node toolchain, strict typing, idioms, async and cancellation, supply chain, performance, and runner mechanics. |
 | [sota-ml-engineering](./skills/sota-ml-engineering/SKILL.md) | Classical ML and MLOps systems | Training, serving, evaluation, drift, reproducibility, and governance. |
 | [sota-llm-engineering](./skills/sota-llm-engineering/SKILL.md) | LLM, RAG, prompt, eval, or agent work | Eval-first LLM application quality, retrieval, orchestration, and operations. |
 | [sota-testing](./skills/sota-testing/SKILL.md) | Test strategy or suite audits | Language-agnostic test design, doubles, integration, property testing, and suite health. |
@@ -34,7 +35,6 @@ This repository contains personalized extensions that enhance coding agent capab
 | [sota-privacy-compliance](./skills/sota-privacy-compliance/SKILL.md) | Privacy, PII, GDPR, or compliance | Data lifecycle, consent, user rights, evidence, and breach readiness. |
 | [sota-observability](./skills/sota-observability/SKILL.md) | Logging, metrics, tracing, SLOs, or incidents | Generic telemetry and operational-readiness practices. |
 | [sota-data-engineering](./skills/sota-data-engineering/SKILL.md) | Batch, streaming, warehouse, or lakehouse work | Pipelines, CDC, contracts, storage, quality, and governance. |
-| [typescript-tooling](./skills/typescript-tooling/SKILL.md) | TypeScript project setup or modernization | Bun + Biome + tsc. Includes monorepo guidance. |
 | [apple-container](./skills/apple-container/SKILL.md) | Apple `container` CLI on macOS, arm64 pinning | Command reference plus forcing `linux/arm64`, catching silent amd64 fallback, and verifying image architecture. |
 | [deep-performance-audit](./skills/deep-performance-audit/SKILL.md) | "performance audit", "optimize codebase" | Hyper-intensively investigate the codebase to identify gross inefficiencies and propose isomorphic improvements. |
 | [deep-project-primer](./skills/deep-project-primer/SKILL.md) | "project primer", "initialize project" | Initialization instructions for any project. Investigates code to understand architecture and purpose. |

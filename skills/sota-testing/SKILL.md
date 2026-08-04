@@ -25,9 +25,9 @@ metadata:
 # SOTA Testing (2026)
 
 Expert-level, language-agnostic rules for producing and auditing production test
-suites. Per-language runner/tooling details (pytest, cargo test, and similar)
-live in installed language skills such as `sota-python` and `sota-rust` — this
-skill defines the strategy,
+suites. Per-language runner/tooling details (pytest, cargo test, bun test, and
+similar) live in installed language skills such as `sota-python`, `sota-rust`,
+and `sota-typescript` — this skill defines the strategy,
 design discipline, and quality bar those tools execute against. Every rule
 states the *why*; every rules file ends with an audit checklist of yes/no
 questions and grep-able smells.
