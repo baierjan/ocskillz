@@ -1,6 +1,6 @@
 ---
 name: apple-container
-description: Use when working with Apple's `container` CLI on macOS (container run/build/exec/image/system/builder/volume/network, Containerfile or Dockerfile builds on Apple silicon) and whenever container work must be pinned to arm64/aarch64. Covers forcing linux/arm64 everywhere, catching silent amd64 fallback, disabling Rosetta, and verifying image architecture. Trigger keywords: apple container, container run, container build, container system start, CONTAINER_DEFAULT_PLATFORM, macOS container, Apple silicon container, arm64, aarch64, arm64/v8, Rosetta, multi-arch image, platform mismatch. Do not use for Docker Desktop, colima, podman, or Kubernetes.
+description: "Use when working with Apple's `container` CLI on macOS (container run/build/exec/image/system/builder/volume/network, Containerfile or Dockerfile builds on Apple silicon) and whenever container work must be pinned to arm64/aarch64. Covers forcing linux/arm64 everywhere, catching silent amd64 fallback, disabling Rosetta, and verifying image architecture. Trigger keywords: apple container, container run, container build, container system start, CONTAINER_DEFAULT_PLATFORM, macOS container, Apple silicon container, arm64, aarch64, arm64/v8, Rosetta, multi-arch image, platform mismatch. Do not use for Docker Desktop, colima, podman, or Kubernetes."
 ---
 
 # Apple Container, pinned to arm64
