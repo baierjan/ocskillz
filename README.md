@@ -9,6 +9,7 @@ This repository contains personalized extensions that enhance coding agent capab
 - **Agents** — Reusable agent definitions with specific tool access
 - **Commands** — Quick actions triggered with arguments
 - **Scripts** — Maintenance helpers (e.g. skill validation)
+- **Plugin** — Optional opencode plugin that registers all of the above without claiming `~/.config/opencode/`
 
 ## Inventory
 
@@ -65,11 +66,17 @@ opencode also ships built-in `build` and `plan` agents — referenced by some co
 
 | Script | Purpose |
 |--------|---------|
-| [validate-skills.sh](./scripts/validate-skills.sh) | Lint every `skills/*/SKILL.md` for required frontmatter (`name`, `description`) and verify `name` matches the directory. Exits non-zero on failure. |
+| [validate-skills.sh](./scripts/validate-skills.sh) | Lint skills, agents, and commands, then verify they reach opencode's resolved config. Exits non-zero on failure. |
+
+### Plugin (`plugin/`)
+
+| File | Purpose |
+|------|---------|
+| [ocskillz.js](./plugin/ocskillz.js) | opencode plugin that registers this repo's skills, agents, and commands through the `config` hook. Used by the plugin install below. |
 
 ## Validation
 
-Run the skill validator any time you add or modify a skill:
+Run the validator any time you add or modify a skill, agent, or command:
 
 ```bash
 ./scripts/validate-skills.sh
@@ -79,18 +86,54 @@ Output:
 
 ```
 ok   [changelog-generator]
-ok   [debug-loop]
 ...
-Checked: 24  Errors: 0
+ok   [agent: planner]
+ok   [command: test]
+
+registration: 24 skills, 3 agents, 5 commands
+
+Checked: 32  Errors: 0
 ```
+
+Three phases run:
+
+1. **Skills** — `skills/*/SKILL.md` has `name` and `description`, and `name` matches the directory.
+2. **Agents and commands** — frontmatter has a `description`, the body is non-empty, agent `name` matches the filename, `mode` is valid, and every command's `agent` names an agent that exists.
+3. **Registration** — loads the plugin into a throwaway project and asserts every skill, agent, and command reaches `opencode debug config`.
+
+Phase 3 is skipped with a notice — not a failure — when `opencode` or `python3` is not on `PATH`, or when dependencies are not installed. Install them with `bun install` (or `npm install`) to enable it.
 
 ## Installation
 
-These configurations are designed for opencode. Place this repository at `~/.config/opencode/` or symlink it:
+Two options. **Pick one** — see the caveat below.
+
+### Option 1: symlink (default)
+
+Place this repository at `~/.config/opencode/` or symlink it:
 
 ```bash
 ln -s /path/to/ocskillz ~/.config/opencode
 ```
+
+opencode picks up `skills/`, `agents/`, and `commands/` directly. This claims the whole config directory.
+
+### Option 2: plugin
+
+Add ocskillz to the `plugin` array in your `opencode.json` (global or project):
+
+```json
+{
+  "plugin": ["ocskillz@git+https://github.com/mimi1vx/ocskillz"]
+}
+```
+
+Restart opencode. The plugin registers all skills, agents, and commands from wherever opencode cached the package, leaving `~/.config/opencode/` free for your own configuration.
+
+Anything you define yourself wins: if you already have an agent or command with the same name, the plugin leaves it alone.
+
+### Caveat: do not use both
+
+With both installed, the skills directory is scanned twice under two different paths, and the plugin becomes a no-op for agents and commands because the symlinked files are already loaded by the time it runs.
 
 ## License
 
