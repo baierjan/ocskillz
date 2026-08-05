@@ -1,0 +1,22 @@
+{
+  "name": "ocskillz",
+  "version": "0.1.0",
+  "description": "Skills, agents, and commands for opencode",
+  "license": "MIT",
+  "type": "module",
+  "main": "plugin/ocskillz.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimi1vx/ocskillz.git"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "skills",
+    "agents",
+    "commands"
+  ],
+  "dependencies": {
+    "yaml": "^2.7.0"
+  }
+}

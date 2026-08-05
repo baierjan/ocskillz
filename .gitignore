@@ -1,6 +1,5 @@
 node_modules
 context-mode
-package.json
 package-lock.json
 bun.lock
 opencode.json
