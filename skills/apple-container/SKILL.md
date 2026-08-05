@@ -195,6 +195,14 @@ container network ls / inspect / delete / prune
 The builder is a container itself. If builds fail oddly after an upgrade, or
 hang, restart it: `container builder stop && container builder start`.
 
+## Resource sizing
+
+Default CPU/memory is minimal and shows on lightweight workloads. For anything
+compute-heavy — compiling, running test suites — size up explicitly with
+`-c`/`-m` on `run`/`build`, or `-c`/`-m` on `container builder start`. 4 CPUs /
+4GB RAM is a reasonable floor for those workflows; bump further if builds or
+tests still thrash.
+
 ## Troubleshooting
 
 - **"Plugin 'container-<x> <y>' not found"** — usually means services are down.
