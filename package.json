@@ -17,6 +17,7 @@
     "commands"
   ],
   "dependencies": {
+    "@opencode-ai/plugin": "^1.18.11",
     "yaml": "^2.7.0"
   }
 }
