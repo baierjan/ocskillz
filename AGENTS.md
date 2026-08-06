@@ -12,7 +12,9 @@ These apply to all project work.
   features, abstractions for single-use code, unrequested configurability, or
   error handling for impossible cases. If 200 lines could be 50, rewrite it.
 - **Sparse comments.** Keep comments short and only where logic isn't obvious at
-  a glance. Don't narrate self-evident code. Explain *why*, not *what*.
+  a glance. Don't narrate self-evident code. Explain *why*, not *what*. Never
+  reference plans, phases, or todo docs — those are temporary dev scaffolding,
+  not part of the codebase.
 - **Think before coding.** Surface assumptions and ambiguities before writing.
   State a brief plan for multi-step work.
 - **Goal-driven execution.** Turn tasks into verifiable success criteria and loop
@@ -34,6 +36,8 @@ isolating. Don't fix by guessing.
 - Only commit when asked. Inspect `git status` / `git diff` / recent `git log`
   first; stage only intended files; never commit secrets. Match the repo's
   existing message style.
+- Never reference plans, phases, or todo docs in commit or PR messages —
+  those are temporary dev scaffolding, not project history.
 
 ## Before a PR (pr-review)
 
