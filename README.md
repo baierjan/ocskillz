@@ -9,7 +9,7 @@ This repository contains personalized extensions that enhance coding agent capab
 - **Agents** — Reusable agent definitions with specific tool access
 - **Commands** — Quick actions triggered with arguments
 - **Scripts** — Maintenance helpers (e.g. skill validation)
-- **Plugin** — Optional opencode plugin that registers all of the above without claiming `~/.config/opencode/`
+- **Plugin** — opencode plugin that registers all of the above without claiming `~/.config/opencode/`
 
 ## Inventory
 
