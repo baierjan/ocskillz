@@ -105,20 +105,6 @@ Phase 3 is skipped with a notice — not a failure — when `opencode` or `pytho
 
 ## Installation
 
-Two options. **Pick one** — see the caveat below.
-
-### Option 1: symlink (default)
-
-Place this repository at `~/.config/opencode/` or symlink it:
-
-```bash
-ln -s /path/to/ocskillz ~/.config/opencode
-```
-
-opencode picks up `skills/`, `agents/`, and `commands/` directly. This claims the whole config directory.
-
-### Option 2: plugin
-
 Add ocskillz to the `plugin` array in your `opencode.json` (global or project):
 
 ```json
@@ -130,10 +116,6 @@ Add ocskillz to the `plugin` array in your `opencode.json` (global or project):
 Restart opencode. The plugin registers all skills, agents, and commands from wherever opencode cached the package, leaving `~/.config/opencode/` free for your own configuration.
 
 Anything you define yourself wins: if you already have an agent or command with the same name, the plugin leaves it alone.
-
-### Caveat: do not use both
-
-With both installed, the skills directory is scanned twice under two different paths, and the plugin becomes a no-op for agents and commands because the symlinked files are already loaded by the time it runs.
 
 ## License
 
