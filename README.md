@@ -40,7 +40,7 @@ This repository contains personalized extensions that enhance coding agent capab
 | [deep-performance-audit](./skills/deep-performance-audit/SKILL.md) | "performance audit", "optimize codebase" | Hyper-intensively investigate the codebase to identify gross inefficiencies and propose isomorphic improvements. |
 | [deep-project-primer](./skills/deep-project-primer/SKILL.md) | "project primer", "initialize project" | Initialization instructions for any project. Investigates code to understand architecture and purpose. |
 | [idea-wizard](./skills/idea-wizard/SKILL.md) | "generate ideas", "improve project" | Generate, evaluate, and implement ideas to improve the project. Generates 30 ideas, filters and plans the top ones. |
-| [readme-reviser](./skills/readme-reviser/SKILL.md) | "update readme", "revise docs" | Update the README and other documentation to reflect all of the recent changes to the project. |
+| [readme-reviser](./skills/readme-reviser/SKILL.md) | "update readme", "revise docs", "sync docs", "stale docs" | Add, correct, and remove documentation to match the current code, written in timeless voice. |
 
 ### Agents (`agents/`)
 
