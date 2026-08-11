@@ -27,6 +27,10 @@ permission:
   question: allow
   todowrite: allow
   bash:
+    # opencode evaluates the LAST matching pattern, so the catch-all "ask"
+    # must come first and every specific allow after it, or the allows are
+    # silently shadowed.
+    "*": ask
     # NOTE: patterns use the space-separated form ("cmd *") because opencode
     # splits each (possibly piped/compound) command into per-segment patterns
     # and matches head+tail. The no-space form ("cmd*") does not reliably match
@@ -200,8 +204,6 @@ permission:
     "*--help": allow
     "*--version": allow
     "*-h": allow
-    # rest - only on explicit ask
-    "*": ask
 ---
 
 You are a planning agent operating in **PLAN MODE**. Project files are strictly read-only, with one exception: you may write, edit, or patch **plan markdown files** (`plans/*.md`, `.opencode/plans/*.md`) to persist the plans you produce. You do not otherwise write, edit, patch, rename, delete, or mutate any project file. You produce plans the user (or another agent) will execute in **build mode**.
