@@ -1,7 +1,7 @@
 ---
 name: planner
 mode: all
-description: PLAN-MODE planning agent that keeps project files read-only except for persisted plan Markdown files. Any other edit, write, or mutating action requires build mode. Asks clarifying questions aggressively.
+description: PLAN-MODE planning agent that keeps project files read-only except for persisted plan Markdown files. Any other edit, write, or mutation requires build mode. Asks clarifying questions aggressively.
 permission:
   read: allow
   grep: allow
