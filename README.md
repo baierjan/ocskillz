@@ -20,7 +20,7 @@ This repository contains personalized extensions that enhance coding agent capab
 | [git-commit](./skills/git-commit/SKILL.md) | "commit", "git commit", "create a commit" | Storytelling-focused Conventional Commits with human-in-the-loop "why" gathering. |
 | [changelog-generator](./skills/changelog-generator/SKILL.md) | "create changelog", "release notes" | Turns commit history into user-friendly changelog entries. |
 | [karpathy-guidelines](./skills/karpathy-guidelines/SKILL.md) | Writing/reviewing/refactoring code | Guardrails to reduce common LLM coding mistakes: surgical changes, simplicity first, verifiable success. |
-| [debug-loop](./skills/debug-loop/SKILL.md) | Bug hunting, especially flaky/intermittent | Reproduce → isolate → hypothesize → failing test → fix → verify. |
+| [debug-loop](./skills/debug-loop/SKILL.md) | Bug hunting, especially flaky/intermittent | Reproduce → isolate → hypothesize → failing test → fix → verify. Pairs with the `debugger` agent. |
 | [pr-review](./skills/pr-review/SKILL.md) | Opening or reviewing a PR | Pre-PR checklist + structured review framework. Pairs with `code-reviewer` agent. |
 | [spec-to-plan](./skills/spec-to-plan/SKILL.md) | "create a spec", "plan this feature" | 5-phase workflow: spec → clarify → markdown spec → todo → plan. |
 | [sota-python](./skills/sota-python/SKILL.md) | Python code, tooling, frameworks, or audits | Production Python guidance with strong new-project defaults for uv, Ruff, and ty. |
@@ -30,7 +30,7 @@ This repository contains personalized extensions that enhance coding agent capab
 | [sota-typescript](./skills/sota-typescript/SKILL.md) | TypeScript or JavaScript code, tooling, or audits | Bun/Node toolchain, strict typing, idioms, async and cancellation, supply chain, performance, and runner mechanics. |
 | [sota-ml-engineering](./skills/sota-ml-engineering/SKILL.md) | Classical ML and MLOps systems | Training, serving, evaluation, drift, reproducibility, and governance. |
 | [sota-llm-engineering](./skills/sota-llm-engineering/SKILL.md) | LLM, RAG, prompt, eval, or agent work | Eval-first LLM application quality, retrieval, orchestration, and operations. |
-| [sota-testing](./skills/sota-testing/SKILL.md) | Test strategy or suite audits | Language-agnostic test design, doubles, integration, property testing, and suite health. |
+| [sota-testing](./skills/sota-testing/SKILL.md) | Test strategy or suite audits | Language-agnostic test design, doubles, integration, property testing, and suite health. Pairs with the `test-writer` and `test-runner` agents. |
 | [sota-code-security](./skills/sota-code-security/SKILL.md) | Secure coding or security audits | Trust boundaries, injection, auth, crypto, web, data exposure, and LLM security. |
 | [sota-sandboxing](./skills/sota-sandboxing/SKILL.md) | Untrusted code, parsers, or agent isolation | Isolation boundaries, OS/container hardening, privilege separation, and agent containment. |
 | [sota-privacy-compliance](./skills/sota-privacy-compliance/SKILL.md) | Privacy, PII, GDPR, or compliance | Data lifecycle, consent, user rights, evidence, and breach readiness. |
@@ -40,15 +40,21 @@ This repository contains personalized extensions that enhance coding agent capab
 | [deep-performance-audit](./skills/deep-performance-audit/SKILL.md) | "performance audit", "optimize codebase" | Hyper-intensively investigate the codebase to identify gross inefficiencies and propose isomorphic improvements. |
 | [deep-project-primer](./skills/deep-project-primer/SKILL.md) | "project primer", "initialize project" | Initialization instructions for any project. Investigates code to understand architecture and purpose. |
 | [idea-wizard](./skills/idea-wizard/SKILL.md) | "generate ideas", "improve project" | Generate, evaluate, and implement ideas to improve the project. Generates 30 ideas, filters and plans the top ones. |
-| [readme-reviser](./skills/readme-reviser/SKILL.md) | "update readme", "revise docs", "sync docs", "stale docs" | Add, correct, and remove documentation to match the current code, written in timeless voice. |
+| [readme-reviser](./skills/readme-reviser/SKILL.md) | "update readme", "revise docs", "sync docs", "stale docs" | Add, correct, and remove documentation to match the current code, written in timeless voice. Pairs with the `docs-writer` agent. |
 
 ### Agents (`agents/`)
 
-| Agent | Tool access | Purpose |
-|-------|-------------|---------|
-| [code-reviewer](./agents/code-reviewer.md) | read-only + git diff/log + todowrite/question | Reviews recent changes; outputs Critical / Warnings / Suggestions. |
-| [refactor](./agents/refactor.md) | read + edit (with `ask`) + todowrite/question | Cautious behavior-preserving refactors. Embeds karpathy-guidelines. |
-| [planner](./agents/planner.md) | read-only + todowrite/question + extended bash/br read | Planning agent with strong clarifying-question discipline. Custom personality on top of opencode's built-in `plan` mode. |
+| Agent | Mode | Tool access | Purpose |
+|-------|------|-------------|---------|
+| [code-reviewer](./agents/code-reviewer.md) | all | read-only + git diff/log + todowrite/question | Reviews recent changes; outputs Critical / Warnings / Suggestions. |
+| [debugger](./agents/debugger.md) | subagent | read + edit + bash (all allowed) | Reproduce → isolate → hypothesize → failing test → fix → verify loop. Embeds `debug-loop`. |
+| [docs-writer](./agents/docs-writer.md) | subagent | read-only + edit scoped to `*.md`/`*.mdx`/`*.rst` | Revises README and docs to match current code, in timeless voice. Embeds `readme-reviser`. |
+| [planner](./agents/planner.md) | all | read-only + todowrite/question + extended bash/br read | Planning agent with strong clarifying-question discipline. Custom personality on top of opencode's built-in `plan` mode. |
+| [refactor](./agents/refactor.md) | all | read + edit + bash (all allowed) + todowrite/question | Cautious behavior-preserving refactors. Embeds karpathy-guidelines. |
+| [test-runner](./agents/test-runner.md) | subagent | read-only, no edit + test/coverage bash allowlist | Runs the suite and coverage tooling, evaluates diff-coverage and flaky suspects, hands off findings — never fixes anything itself. |
+| [test-writer](./agents/test-writer.md) | subagent | read + edit + test-runner bash allowlist | Writes and strengthens tests without changing production behavior. Pairs with `sota-testing`. |
+
+`code-reviewer` and `refactor` predate the `mode` field and default to `all`; `planner` declares `mode: all` explicitly. All three are Tab-switchable as a primary agent or invocable as a subagent. The four `subagent`-only agents (`debugger`, `docs-writer`, `test-runner`, `test-writer`) are narrowly scoped by design and only invocable via the Task tool or `@mention`, never as your main session driver.
 
 opencode also ships built-in `build` and `plan` agents — referenced by some commands below.
 
@@ -90,9 +96,9 @@ ok   [changelog-generator]
 ok   [agent: planner]
 ok   [command: test]
 
-registration: 24 skills, 3 agents, 5 commands
+registration: 24 skills, 7 agents, 5 commands
 
-Checked: 32  Errors: 0
+Checked: 36  Errors: 0
 ```
 
 Three phases run:
