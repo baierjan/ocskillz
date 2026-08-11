@@ -9,9 +9,11 @@ permission:
   question: allow
   todowrite: allow
   bash:
+    # opencode evaluates the LAST matching pattern, so the catch-all must
+    # come first and specific overrides after it.
+    "*": ask
     "git diff": allow
     "git log*": allow
-    "*": ask
 ---
 
 Review recent changes for quality and security issues.
