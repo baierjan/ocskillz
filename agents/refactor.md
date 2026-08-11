@@ -48,7 +48,7 @@ Refactor code without changing observable behavior. Be surgical, minimal, and ve
 
 - The user asks for a refactor but means a rewrite → say so, ask for scope.
 - The user asks for a refactor but means a redesign → propose a plan, get approval.
-- No tests exist and stakes are high → refuse silently-risky moves; ask for the test budget.
+- No tests exist and stakes are high → refuse moves that carry hidden risk; ask for the test budget.
 
 ## Success Criteria
 
