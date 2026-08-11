@@ -22,7 +22,7 @@ Requires OpenCode V2. V1 is no longer supported — see [Installation](#installa
 | [git-commit](./skills/git-commit/SKILL.md) | "commit", "git commit", "create a commit" | Storytelling-focused Conventional Commits with human-in-the-loop "why" gathering. |
 | [changelog-generator](./skills/changelog-generator/SKILL.md) | "create changelog", "release notes" | Turns commit history into user-friendly changelog entries. |
 | [karpathy-guidelines](./skills/karpathy-guidelines/SKILL.md) | Writing/reviewing/refactoring code | Guardrails to reduce common LLM coding mistakes: surgical changes, simplicity first, verifiable success. |
-| [debug-loop](./skills/debug-loop/SKILL.md) | Bug hunting, especially flaky/intermittent | Reproduce → isolate → hypothesize → failing test → fix → verify. |
+| [debug-loop](./skills/debug-loop/SKILL.md) | Bug hunting, especially flaky/intermittent | Reproduce → isolate → hypothesize → failing test → fix → verify. Pairs with the `debugger` agent. |
 | [pr-review](./skills/pr-review/SKILL.md) | Opening or reviewing a PR | Pre-PR checklist + structured review framework. Pairs with `code-reviewer` agent. |
 | [change-walkthrough](./skills/change-walkthrough/SKILL.md) | "walk me through", "explain this PR" | Paced, conversational diff explanation grouped by behavioral effect, one topic at a time. |
 | [spec-to-plan](./skills/spec-to-plan/SKILL.md) | "create a spec", "plan this feature" | 5-phase workflow: spec → clarify → markdown spec → todo → plan. |
@@ -33,7 +33,7 @@ Requires OpenCode V2. V1 is no longer supported — see [Installation](#installa
 | [sota-typescript](./skills/sota-typescript/SKILL.md) | TypeScript or JavaScript code, tooling, or audits | Bun/Node toolchain, strict typing, idioms, async and cancellation, supply chain, performance, and runner mechanics. |
 | [sota-ml-engineering](./skills/sota-ml-engineering/SKILL.md) | Classical ML and MLOps systems | Training, serving, evaluation, drift, reproducibility, and governance. |
 | [sota-llm-engineering](./skills/sota-llm-engineering/SKILL.md) | LLM, RAG, prompt, eval, or agent work | Eval-first LLM application quality, retrieval, orchestration, and operations. |
-| [sota-testing](./skills/sota-testing/SKILL.md) | Test strategy or suite audits | Language-agnostic test design, doubles, integration, property testing, and suite health. |
+| [sota-testing](./skills/sota-testing/SKILL.md) | Test strategy or suite audits | Language-agnostic test design, doubles, integration, property testing, and suite health. Pairs with the `test-writer` and `test-runner` agents. |
 | [sota-code-security](./skills/sota-code-security/SKILL.md) | Secure coding or security audits | Trust boundaries, injection, auth, crypto, web, data exposure, and LLM security. |
 | [sota-sandboxing](./skills/sota-sandboxing/SKILL.md) | Untrusted code, parsers, or agent isolation | Isolation boundaries, OS/container hardening, privilege separation, and agent containment. |
 | [sota-privacy-compliance](./skills/sota-privacy-compliance/SKILL.md) | Privacy, PII, GDPR, or compliance | Data lifecycle, consent, user rights, evidence, and breach readiness. |
@@ -45,7 +45,7 @@ Requires OpenCode V2. V1 is no longer supported — see [Installation](#installa
 | [deep-performance-audit](./skills/deep-performance-audit/SKILL.md) | "performance audit", "optimize codebase" | Hyper-intensively investigate the codebase to identify gross inefficiencies and propose isomorphic improvements. |
 | [deep-project-primer](./skills/deep-project-primer/SKILL.md) | "project primer", "initialize project" | Initialization instructions for any project. Investigates code to understand architecture and purpose. |
 | [idea-wizard](./skills/idea-wizard/SKILL.md) | "generate ideas", "improve project" | Generate, evaluate, and implement ideas to improve the project. Generates 30 ideas, filters and plans the top ones. |
-| [readme-reviser](./skills/readme-reviser/SKILL.md) | "update readme", "revise docs", "sync docs", "stale docs" | Add, correct, and remove documentation to match the current code, written in timeless voice. |
+| [readme-reviser](./skills/readme-reviser/SKILL.md) | "update readme", "revise docs", "sync docs", "stale docs" | Add, correct, and remove documentation to match the current code, written in timeless voice. Pairs with the `docs-writer` agent. |
 | [ste-english](./skills/ste-english/SKILL.md) | "STE", "simplified technical english", "rewrite in STE" | Write or audit text in ASD-STE100 style: short sentences, simple verbs, a short substitution table. |
 
 ### Agents (`agents/`)
@@ -53,7 +53,11 @@ Requires OpenCode V2. V1 is no longer supported — see [Installation](#installa
 | Agent | Tool access | Purpose |
 |-------|-------------|---------|
 | [code-reviewer](./agents/code-reviewer.md) | primary; read-only + git diff/log + question | Reviews recent changes; outputs Critical / Warnings / Suggestions. |
+| [debugger](./agents/debugger.md) | subagent; read + edit + shell (all allowed) | Reproduce → isolate → hypothesize → failing test → fix → verify loop. Embeds `debug-loop`. |
+| [docs-writer](./agents/docs-writer.md) | subagent; read-only + edit scoped to `*.md`/`*.mdx`/`*.rst` | Revises README and docs to match current code, in timeless voice. Embeds `readme-reviser`. |
 | [refactor](./agents/refactor.md) | subagent; read + edit + question | Cautious behavior-preserving refactors. Embeds karpathy-guidelines. |
+| [test-runner](./agents/test-runner.md) | subagent; read-only, no edit + test/coverage shell allowlist | Runs the suite and coverage tooling, evaluates diff-coverage and flaky suspects, hands off findings; never fixes anything itself. |
+| [test-writer](./agents/test-writer.md) | subagent; read + edit + test-runner shell allowlist | Writes and strengthens tests without changing production behavior. Pairs with `sota-testing`. |
 | [planner](./agents/planner.md) | primary; read-only project access + question + extended read-only shell + full `br` | Planning agent with strong clarifying-question discipline. Reads and writes plans under `~/.opencode/plan/` and, in projects that already use beads, tracks approved plans as beads issues via `br`. |
 
 opencode also ships built-in `build` and `plan` agents — referenced by some commands below.
