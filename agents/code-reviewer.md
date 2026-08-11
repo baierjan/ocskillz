@@ -5,6 +5,7 @@ permission:
   read: allow
   grep: allow
   glob: allow
+  list: allow
   edit: deny
   question: allow
   todowrite: allow
@@ -12,8 +13,62 @@ permission:
     # opencode evaluates the LAST matching pattern, so the catch-all must
     # come first and specific overrides after it.
     "*": ask
+    "echo": allow
+    "echo *": allow
     "git diff": allow
-    "git log*": allow
+    "git diff *": allow
+    "git log": allow
+    "git log *": allow
+    "git status": allow
+    "git status *": allow
+    "git show *": allow
+    "git blame *": allow
+    # filesystem inspection (same allowlist as planner.md)
+    "ls": allow
+    "ls *": allow
+    "tree": allow
+    "tree *": allow
+    "wc": allow
+    "wc *": allow
+    "stat *": allow
+    "file *": allow
+    "du": allow
+    "du *": allow
+    "df": allow
+    "df *": allow
+    "pwd": allow
+    "which *": allow
+    "whereis *": allow
+    "type *": allow
+    "readlink *": allow
+    "realpath *": allow
+    # text search / inspection (same allowlist as planner.md)
+    "rg": allow
+    "rg *": allow
+    "grep": allow
+    "grep *": allow
+    "ag *": allow
+    "fd": allow
+    "fd *": allow
+    "cat *": allow
+    "head": allow
+    "head *": allow
+    "tail": allow
+    "tail *": allow
+    "less *": allow
+    "more *": allow
+    "diff *": allow
+    "sort": allow
+    "sort *": allow
+    "uniq": allow
+    "uniq *": allow
+    "cut *": allow
+    "printf *": allow
+    "jq": allow
+    "jq *": allow
+    "yq": allow
+    "yq *": allow
+    "column *": allow
 ---
 
 Review recent changes for quality and security issues.
