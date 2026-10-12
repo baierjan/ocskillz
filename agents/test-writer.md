@@ -1,71 +1,170 @@
 ---
-name: test-writer
 mode: subagent
 description: Writes and strengthens tests for existing code without changing production behavior. Use when coverage is missing, a bug fix needs a regression test, or a feature needs characterization tests before refactoring.
-permission:
-  read: allow
-  grep: allow
-  glob: allow
-  edit: allow
-  write: allow
-  patch: allow
-  question: allow
-  todowrite: allow
-  bash:
-    # opencode evaluates the LAST matching pattern, so the catch-all must
-    # come first and specific overrides after it.
-    "*": ask
-    "echo": allow
-    "echo *": allow
-    "git status": allow
-    "git status *": allow
-    "git diff": allow
-    "git diff *": allow
-    "git log": allow
-    "git log *": allow
-    "git show *": allow
-    "git blame *": allow
-    "git ls-files": allow
-    "git ls-files *": allow
-    "ls": allow
-    "ls *": allow
-    "find *": allow
-    "cat *": allow
-    "rg": allow
-    "rg *": allow
-    "grep": allow
-    "grep *": allow
-    "fd": allow
-    "fd *": allow
-    "wc": allow
-    "wc *": allow
-    # version/help probes — harmless, but without an explicit allow they hit
-    # the catch-all "ask" and can stall non-interactive runs indefinitely
-    "*--help": allow
-    "*--version": allow
-    "*-h": allow
-    # test execution — the actual point of this agent
-    "pytest": allow
-    "pytest *": allow
-    "python -m pytest *": allow
-    "uv run pytest *": allow
-    "npm test": allow
-    "npm test *": allow
-    "npm run test *": allow
-    "pnpm test": allow
-    "pnpm test *": allow
-    "pnpm run test *": allow
-    "yarn test *": allow
-    "bun test": allow
-    "bun test *": allow
-    "bun run test *": allow
-    "go test *": allow
-    "cargo test *": allow
-    "cargo nextest *": allow
-    "rspec *": allow
-    "bundle exec rspec *": allow
-    "mix test *": allow
-    "phpunit *": allow
+permissions:
+  - action: read
+    resource: "*"
+    effect: allow
+  - action: grep
+    resource: "*"
+    effect: allow
+  - action: glob
+    resource: "*"
+    effect: allow
+  - action: edit
+    resource: "*"
+    effect: allow
+  - action: question
+    resource: "*"
+    effect: allow
+  # Last matching rule wins: catch-all first, specific overrides after.
+  - action: shell
+    resource: "*"
+    effect: ask
+  - action: shell
+    resource: "echo"
+    effect: allow
+  - action: shell
+    resource: "echo *"
+    effect: allow
+  - action: shell
+    resource: "git status"
+    effect: allow
+  - action: shell
+    resource: "git status *"
+    effect: allow
+  - action: shell
+    resource: "git diff"
+    effect: allow
+  - action: shell
+    resource: "git diff *"
+    effect: allow
+  - action: shell
+    resource: "git log"
+    effect: allow
+  - action: shell
+    resource: "git log *"
+    effect: allow
+  - action: shell
+    resource: "git show *"
+    effect: allow
+  - action: shell
+    resource: "git blame *"
+    effect: allow
+  - action: shell
+    resource: "git ls-files"
+    effect: allow
+  - action: shell
+    resource: "git ls-files *"
+    effect: allow
+  - action: shell
+    resource: "ls"
+    effect: allow
+  - action: shell
+    resource: "ls *"
+    effect: allow
+  - action: shell
+    resource: "find *"
+    effect: allow
+  - action: shell
+    resource: "cat *"
+    effect: allow
+  - action: shell
+    resource: "rg"
+    effect: allow
+  - action: shell
+    resource: "rg *"
+    effect: allow
+  - action: shell
+    resource: "grep"
+    effect: allow
+  - action: shell
+    resource: "grep *"
+    effect: allow
+  - action: shell
+    resource: "fd"
+    effect: allow
+  - action: shell
+    resource: "fd *"
+    effect: allow
+  - action: shell
+    resource: "wc"
+    effect: allow
+  - action: shell
+    resource: "wc *"
+    effect: allow
+  - action: shell
+    resource: "*--help"
+    effect: allow
+  - action: shell
+    resource: "*--version"
+    effect: allow
+  - action: shell
+    resource: "*-h"
+    effect: allow
+  - action: shell
+    resource: "pytest"
+    effect: allow
+  - action: shell
+    resource: "pytest *"
+    effect: allow
+  - action: shell
+    resource: "python -m pytest *"
+    effect: allow
+  - action: shell
+    resource: "uv run pytest *"
+    effect: allow
+  - action: shell
+    resource: "npm test"
+    effect: allow
+  - action: shell
+    resource: "npm test *"
+    effect: allow
+  - action: shell
+    resource: "npm run test *"
+    effect: allow
+  - action: shell
+    resource: "pnpm test"
+    effect: allow
+  - action: shell
+    resource: "pnpm test *"
+    effect: allow
+  - action: shell
+    resource: "pnpm run test *"
+    effect: allow
+  - action: shell
+    resource: "yarn test *"
+    effect: allow
+  - action: shell
+    resource: "bun test"
+    effect: allow
+  - action: shell
+    resource: "bun test *"
+    effect: allow
+  - action: shell
+    resource: "bun run test *"
+    effect: allow
+  - action: shell
+    resource: "go test *"
+    effect: allow
+  - action: shell
+    resource: "cargo test *"
+    effect: allow
+  - action: shell
+    resource: "cargo nextest *"
+    effect: allow
+  - action: shell
+    resource: "rspec *"
+    effect: allow
+  - action: shell
+    resource: "bundle exec rspec *"
+    effect: allow
+  - action: shell
+    resource: "mix test *"
+    effect: allow
+  - action: shell
+    resource: "phpunit *"
+    effect: allow
 ---
 
 Write tests that pin down behavior. Do not change production code to make a

@@ -1,17 +1,26 @@
 ---
-name: debugger
 mode: subagent
 description: Systematic bug hunter. Reproduces, isolates, hypothesizes, writes a failing regression test, then applies the smallest fix. Use for bug reports, flaky tests, or regressions without a clear root cause.
-permission:
-  read: allow
-  grep: allow
-  glob: allow
-  edit: allow
-  write: allow
-  patch: allow
-  question: allow
-  todowrite: allow
-  bash: allow
+permissions:
+  - action: read
+    resource: "*"
+    effect: allow
+  - action: grep
+    resource: "*"
+    effect: allow
+  - action: glob
+    resource: "*"
+    effect: allow
+  - action: edit
+    resource: "*"
+    effect: allow
+  - action: question
+    resource: "*"
+    effect: allow
+  # Last matching rule wins: catch-all first, specific overrides after.
+  - action: shell
+    resource: "*"
+    effect: allow
 ---
 
 Chase bugs to ground. Reproduce, isolate, hypothesize, encode the regression

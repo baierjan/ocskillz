@@ -143,6 +143,22 @@ test("hydrates the exact bundled agent modes", async () => {
   assert.equal(agentEditor.get("refactor").mode, "subagent")
 })
 
+test("hydrates the subagent-only agents with V2 permissions", async () => {
+  const ids = ["debugger", "docs-writer", "test-runner", "test-writer"]
+  const { ctx, agentEditor } = makeContext({
+    declaredAgents: Object.fromEntries(ids.map((id) => [id, Agent.Info.default(id)])),
+  })
+  await ocskillz.setup(ctx)
+  for (const id of ids) {
+    const agent = agentEditor.get(id)
+    assert.equal(agent.mode, "subagent", id)
+    assert.ok(agent.system.length > 0, id)
+    assert.ok(agent.permissions.every((r) => r.action && r.resource && r.effect), id)
+  }
+  const runner = agentEditor.get("test-runner").permissions
+  assert.deepEqual(runner.find((r) => r.action === "edit"), { action: "edit", resource: "*", effect: "deny" })
+})
+
 test("preserves a user-provided non-default mode override", async () => {
   const { ctx, agentEditor } = makeContext({
     declaredAgents: { planner: { ...Agent.Info.default("planner"), mode: "all" } },

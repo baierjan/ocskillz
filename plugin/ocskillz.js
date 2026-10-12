@@ -23,7 +23,15 @@ const SKILLS_DIR = path.join(ROOT, "skills")
 const AGENTS_DIR = path.join(ROOT, "agents")
 const COMMANDS_DIR = path.join(ROOT, "commands")
 
-const HYDRATED_AGENT_IDS = ["code-reviewer", "planner", "refactor"]
+const HYDRATED_AGENT_IDS = [
+  "code-reviewer",
+  "debugger",
+  "docs-writer",
+  "planner",
+  "refactor",
+  "test-runner",
+  "test-writer",
+]
 
 const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
 

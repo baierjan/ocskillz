@@ -196,7 +196,7 @@ for file in "$AGENTS_DIR"/*.md; do
 	expected_mode=""
 	case "$agent_name" in
 	code-reviewer | planner) expected_mode="primary" ;;
-	refactor) expected_mode="subagent" ;;
+	refactor | debugger | docs-writer | test-runner | test-writer) expected_mode="subagent" ;;
 	esac
 	if [[ -n "$expected_mode" && "$fm_mode" != "$expected_mode" ]]; then
 		echo "FAIL [agent: $agent_name]: mode '$fm_mode' must be '$expected_mode'"
@@ -294,7 +294,11 @@ else
   "agents": {
     "code-reviewer": { "mode": "primary" },
     "planner": { "mode": "primary" },
-    "refactor": { "mode": "subagent" }
+    "refactor": { "mode": "subagent" },
+    "debugger": { "mode": "subagent" },
+    "docs-writer": { "mode": "subagent" },
+    "test-runner": { "mode": "subagent" },
+    "test-writer": { "mode": "subagent" }
   }
 }
 EOF
@@ -345,6 +349,10 @@ expected_agents = {
     "code-reviewer": "primary",
     "planner": "primary",
     "refactor": "subagent",
+    "debugger": "subagent",
+    "docs-writer": "subagent",
+    "test-runner": "subagent",
+    "test-writer": "subagent",
 }
 
 plugins = plugin_doc.get("data") or []

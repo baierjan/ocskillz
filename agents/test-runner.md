@@ -1,94 +1,242 @@
 ---
-name: test-runner
 mode: subagent
 description: "Runs the test suite and coverage tooling, then evaluates the results — failures, likely-flaky tests, and coverage gaps on the diff. Read-only: reports findings rather than editing code. Use before a PR, after a batch of changes, or for a suite health/coverage snapshot."
-permission:
-  read: allow
-  grep: allow
-  glob: allow
-  edit: deny
-  question: allow
-  todowrite: allow
-  bash:
-    # opencode evaluates the LAST matching pattern, so the catch-all must
-    # come first and specific overrides after it.
-    "*": ask
-    "echo": allow
-    "echo *": allow
-    "git status": allow
-    "git status *": allow
-    "git diff": allow
-    "git diff *": allow
-    "git log": allow
-    "git log *": allow
-    "git show *": allow
-    "git blame *": allow
-    "git merge-base *": allow
-    "git rev-parse *": allow
-    "git ls-files": allow
-    "git ls-files *": allow
-    "ls": allow
-    "ls *": allow
-    "tree": allow
-    "tree *": allow
-    "find *": allow
-    "wc": allow
-    "wc *": allow
-    "cat *": allow
-    "rg": allow
-    "rg *": allow
-    "grep": allow
-    "grep *": allow
-    "fd": allow
-    "fd *": allow
-    "jq": allow
-    "jq *": allow
-    # version/help probes — harmless, but without an explicit allow they hit
-    # the catch-all "ask" and can stall non-interactive runs indefinitely
-    "*--help": allow
-    "*--version": allow
-    "*-h": allow
-    # test execution — same runners as test-writer.md
-    "pytest": allow
-    "pytest *": allow
-    "python -m pytest *": allow
-    "uv run pytest *": allow
-    "npm test": allow
-    "npm test *": allow
-    "npm run test *": allow
-    "pnpm test": allow
-    "pnpm test *": allow
-    "pnpm run test *": allow
-    "yarn test *": allow
-    "bun test": allow
-    "bun test *": allow
-    "bun run test *": allow
-    "jest": allow
-    "jest *": allow
-    "go test *": allow
-    "cargo test *": allow
-    "cargo nextest *": allow
-    "rspec *": allow
-    "bundle exec rspec *": allow
-    "mix test *": allow
-    "phpunit *": allow
-    "dotnet test *": allow
-    # coverage collection
-    "coverage run *": allow
-    "coverage report *": allow
-    "coverage json *": allow
-    "coverage xml *": allow
-    "coverage html *": allow
-    "uv run coverage *": allow
-    "npm run coverage *": allow
-    "pnpm run coverage *": allow
-    "npx nyc *": allow
-    "go tool cover *": allow
-    "cargo llvm-cov *": allow
-    "cargo tarpaulin *": allow
-    "lcov *": allow
-    "genhtml *": allow
-    "mix coveralls*": allow
+permissions:
+  - action: read
+    resource: "*"
+    effect: allow
+  - action: grep
+    resource: "*"
+    effect: allow
+  - action: glob
+    resource: "*"
+    effect: allow
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: question
+    resource: "*"
+    effect: allow
+  # Last matching rule wins: catch-all first, specific overrides after.
+  - action: shell
+    resource: "*"
+    effect: ask
+  - action: shell
+    resource: "echo"
+    effect: allow
+  - action: shell
+    resource: "echo *"
+    effect: allow
+  - action: shell
+    resource: "git status"
+    effect: allow
+  - action: shell
+    resource: "git status *"
+    effect: allow
+  - action: shell
+    resource: "git diff"
+    effect: allow
+  - action: shell
+    resource: "git diff *"
+    effect: allow
+  - action: shell
+    resource: "git log"
+    effect: allow
+  - action: shell
+    resource: "git log *"
+    effect: allow
+  - action: shell
+    resource: "git show *"
+    effect: allow
+  - action: shell
+    resource: "git blame *"
+    effect: allow
+  - action: shell
+    resource: "git merge-base *"
+    effect: allow
+  - action: shell
+    resource: "git rev-parse *"
+    effect: allow
+  - action: shell
+    resource: "git ls-files"
+    effect: allow
+  - action: shell
+    resource: "git ls-files *"
+    effect: allow
+  - action: shell
+    resource: "ls"
+    effect: allow
+  - action: shell
+    resource: "ls *"
+    effect: allow
+  - action: shell
+    resource: "tree"
+    effect: allow
+  - action: shell
+    resource: "tree *"
+    effect: allow
+  - action: shell
+    resource: "find *"
+    effect: allow
+  - action: shell
+    resource: "wc"
+    effect: allow
+  - action: shell
+    resource: "wc *"
+    effect: allow
+  - action: shell
+    resource: "cat *"
+    effect: allow
+  - action: shell
+    resource: "rg"
+    effect: allow
+  - action: shell
+    resource: "rg *"
+    effect: allow
+  - action: shell
+    resource: "grep"
+    effect: allow
+  - action: shell
+    resource: "grep *"
+    effect: allow
+  - action: shell
+    resource: "fd"
+    effect: allow
+  - action: shell
+    resource: "fd *"
+    effect: allow
+  - action: shell
+    resource: "jq"
+    effect: allow
+  - action: shell
+    resource: "jq *"
+    effect: allow
+  - action: shell
+    resource: "*--help"
+    effect: allow
+  - action: shell
+    resource: "*--version"
+    effect: allow
+  - action: shell
+    resource: "*-h"
+    effect: allow
+  - action: shell
+    resource: "pytest"
+    effect: allow
+  - action: shell
+    resource: "pytest *"
+    effect: allow
+  - action: shell
+    resource: "python -m pytest *"
+    effect: allow
+  - action: shell
+    resource: "uv run pytest *"
+    effect: allow
+  - action: shell
+    resource: "npm test"
+    effect: allow
+  - action: shell
+    resource: "npm test *"
+    effect: allow
+  - action: shell
+    resource: "npm run test *"
+    effect: allow
+  - action: shell
+    resource: "pnpm test"
+    effect: allow
+  - action: shell
+    resource: "pnpm test *"
+    effect: allow
+  - action: shell
+    resource: "pnpm run test *"
+    effect: allow
+  - action: shell
+    resource: "yarn test *"
+    effect: allow
+  - action: shell
+    resource: "bun test"
+    effect: allow
+  - action: shell
+    resource: "bun test *"
+    effect: allow
+  - action: shell
+    resource: "bun run test *"
+    effect: allow
+  - action: shell
+    resource: "jest"
+    effect: allow
+  - action: shell
+    resource: "jest *"
+    effect: allow
+  - action: shell
+    resource: "go test *"
+    effect: allow
+  - action: shell
+    resource: "cargo test *"
+    effect: allow
+  - action: shell
+    resource: "cargo nextest *"
+    effect: allow
+  - action: shell
+    resource: "rspec *"
+    effect: allow
+  - action: shell
+    resource: "bundle exec rspec *"
+    effect: allow
+  - action: shell
+    resource: "mix test *"
+    effect: allow
+  - action: shell
+    resource: "phpunit *"
+    effect: allow
+  - action: shell
+    resource: "dotnet test *"
+    effect: allow
+  - action: shell
+    resource: "coverage run *"
+    effect: allow
+  - action: shell
+    resource: "coverage report *"
+    effect: allow
+  - action: shell
+    resource: "coverage json *"
+    effect: allow
+  - action: shell
+    resource: "coverage xml *"
+    effect: allow
+  - action: shell
+    resource: "coverage html *"
+    effect: allow
+  - action: shell
+    resource: "uv run coverage *"
+    effect: allow
+  - action: shell
+    resource: "npm run coverage *"
+    effect: allow
+  - action: shell
+    resource: "pnpm run coverage *"
+    effect: allow
+  - action: shell
+    resource: "npx nyc *"
+    effect: allow
+  - action: shell
+    resource: "go tool cover *"
+    effect: allow
+  - action: shell
+    resource: "cargo llvm-cov *"
+    effect: allow
+  - action: shell
+    resource: "cargo tarpaulin *"
+    effect: allow
+  - action: shell
+    resource: "lcov *"
+    effect: allow
+  - action: shell
+    resource: "genhtml *"
+    effect: allow
+  - action: shell
+    resource: "mix coveralls*"
+    effect: allow
 ---
 
 Run the suite, collect coverage, and evaluate what it means. You do not fix

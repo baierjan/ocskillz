@@ -103,9 +103,9 @@ ok   [changelog-generator]
 ok   [agent: planner]
 ok   [command: test]
 
-registration: 26 skills, 3 agents, 6 commands
+registration: 28 skills, 7 agents, 6 commands
 
-Checked: 33  Errors: 0
+Checked: 41  Errors: 0
 ```
 
 Three phases run:

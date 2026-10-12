@@ -1,61 +1,111 @@
 ---
-name: docs-writer
 mode: subagent
 description: Revises README and other documentation so it matches the current code, written in timeless voice. Use after shipping a feature, renaming an interface, or before a release, when docs have drifted from the code.
-permission:
-  read: allow
-  grep: allow
-  glob: allow
-  # edit/write/patch all map to the internal "edit" permission in opencode.
-  # Restrict to documentation files only; everything else stays read-only.
-  edit:
-    "*": deny
-    "*.md": allow
-    "**/*.md": allow
-    "**/*.mdx": allow
-    "**/*.rst": allow
-  write:
-    "*": deny
-    "*.md": allow
-    "**/*.md": allow
-    "**/*.mdx": allow
-    "**/*.rst": allow
-  patch:
-    "*": deny
-    "*.md": allow
-    "**/*.md": allow
-    "**/*.mdx": allow
-    "**/*.rst": allow
-  question: allow
-  todowrite: allow
-  bash:
-    # opencode evaluates the LAST matching pattern, so the catch-all must
-    # come first and specific overrides after it.
-    "*": ask
-    "echo": allow
-    "echo *": allow
-    "git diff": allow
-    "git diff *": allow
-    "git log": allow
-    "git log *": allow
-    "git status": allow
-    "git status *": allow
-    "git show *": allow
-    "git blame *": allow
-    "ls": allow
-    "ls *": allow
-    "tree": allow
-    "tree *": allow
-    "wc": allow
-    "wc *": allow
-    "find *": allow
-    "rg": allow
-    "rg *": allow
-    "grep": allow
-    "grep *": allow
-    "fd": allow
-    "fd *": allow
-    "cat *": allow
+permissions:
+  - action: read
+    resource: "*"
+    effect: allow
+  - action: grep
+    resource: "*"
+    effect: allow
+  - action: glob
+    resource: "*"
+    effect: allow
+  # edit also covers write and patch; deny everything except docs files.
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: edit
+    resource: "*.md"
+    effect: allow
+  - action: edit
+    resource: "**/*.md"
+    effect: allow
+  - action: edit
+    resource: "**/*.mdx"
+    effect: allow
+  - action: edit
+    resource: "**/*.rst"
+    effect: allow
+  - action: question
+    resource: "*"
+    effect: allow
+  # Last matching rule wins: catch-all first, specific overrides after.
+  - action: shell
+    resource: "*"
+    effect: ask
+  - action: shell
+    resource: "echo"
+    effect: allow
+  - action: shell
+    resource: "echo *"
+    effect: allow
+  - action: shell
+    resource: "git diff"
+    effect: allow
+  - action: shell
+    resource: "git diff *"
+    effect: allow
+  - action: shell
+    resource: "git log"
+    effect: allow
+  - action: shell
+    resource: "git log *"
+    effect: allow
+  - action: shell
+    resource: "git status"
+    effect: allow
+  - action: shell
+    resource: "git status *"
+    effect: allow
+  - action: shell
+    resource: "git show *"
+    effect: allow
+  - action: shell
+    resource: "git blame *"
+    effect: allow
+  - action: shell
+    resource: "ls"
+    effect: allow
+  - action: shell
+    resource: "ls *"
+    effect: allow
+  - action: shell
+    resource: "tree"
+    effect: allow
+  - action: shell
+    resource: "tree *"
+    effect: allow
+  - action: shell
+    resource: "wc"
+    effect: allow
+  - action: shell
+    resource: "wc *"
+    effect: allow
+  - action: shell
+    resource: "find *"
+    effect: allow
+  - action: shell
+    resource: "rg"
+    effect: allow
+  - action: shell
+    resource: "rg *"
+    effect: allow
+  - action: shell
+    resource: "grep"
+    effect: allow
+  - action: shell
+    resource: "grep *"
+    effect: allow
+  - action: shell
+    resource: "fd"
+    effect: allow
+  - action: shell
+    resource: "fd *"
+    effect: allow
+  - action: shell
+    resource: "cat *"
+    effect: allow
 ---
 
 Bring documentation back in line with the code, in timeless voice: docs must

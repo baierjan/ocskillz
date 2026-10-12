@@ -4,7 +4,7 @@ ocskillz supports OpenCode V2 only. Its package entrypoint uses `@opencode/plugi
 
 ## Installation
 
-Declare the package and all three agent stubs in global or project `opencode.json(c)`:
+Declare the package and all seven agent stubs in global or project `opencode.json(c)`:
 
 ```jsonc
 {
@@ -13,7 +13,11 @@ Declare the package and all three agent stubs in global or project `opencode.jso
   "agents": {
     "code-reviewer": { "mode": "primary" },
     "planner": { "mode": "primary" },
-    "refactor": { "mode": "subagent" }
+    "refactor": { "mode": "subagent" },
+    "debugger": { "mode": "subagent" },
+    "docs-writer": { "mode": "subagent" },
+    "test-runner": { "mode": "subagent" },
+    "test-writer": { "mode": "subagent" }
   }
 }
 ```
@@ -25,8 +29,9 @@ An explicit override equal to an empty-agent default is indistinguishable from a
 ## Agent behavior
 
 - `code-reviewer` and `planner` are selectable primary agents.
-- `refactor` is subagent-only. Ask a primary agent to launch `refactor` through the `subagent` tool.
-- Plugin-registered commands cannot declare V2's file-based `subagent` behavior. They execute a callback and may switch only to a primary-capable agent, so no bundled command targets `refactor`.
+- `refactor`, `debugger`, `docs-writer`, `test-runner` and `test-writer` are subagent-only. Ask a primary agent to launch them through the `subagent` tool.
+- `docs-writer` can edit only `*.md`, `*.mdx` and `*.rst` files; `test-runner` cannot edit at all.
+- Plugin-registered commands cannot declare V2's file-based `subagent` behavior. They execute a callback and may switch only to a primary-capable agent, so no bundled command targets a subagent-only agent.
 - The planner treats project files as read-only. It reads and writes plan Markdown only under `~/.opencode/plan/`, and changes beads state (`.beads/`) only through `br`, which it may run without prompting. It uses `br` only when the project already has `.beads/`; `br init` is denied.
 
 ## Migrating configuration
@@ -69,4 +74,4 @@ For direct inspection, start OpenCode in a directory whose configuration contain
 opencode debug agents
 ```
 
-Confirm that `code-reviewer` and `planner` report `primary`, while `refactor` reports `subagent`.
+Confirm that `code-reviewer` and `planner` report `primary`, while the other five report `subagent`.
